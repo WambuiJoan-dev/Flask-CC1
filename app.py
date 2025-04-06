@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_migrate import Migrate, upgrade
 from models import Hero, Power, HeroPower, db  
-from flask.cli import with_appcontext
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'

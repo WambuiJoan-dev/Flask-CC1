@@ -1,1 +1,118 @@
-Single-database configuration for Flask.
+# 🦸‍♂️ Heroes & Powers API
+
+A Flask-based RESTful API that models superheroes, their powers, and the strength of those powers. This project demonstrates many-to-many relationships, serialization with `SQLAlchemy-Serializer`, validations, and database migrations.
+
+---
+
+## 🗂 Features
+
+- Models:
+  - `Hero`
+  - `Power`
+  - `HeroPower` (Join Table)
+
+- Relationships:
+  - A Hero has many Powers through HeroPowers.
+  - A Power has many Heroes through HeroPowers.
+  - A HeroPower belongs to a Hero and a Power.
+
+- Validations:
+  - `HeroPower.strength` must be one of: `'Strong'`, `'Average'`, `'Weak'`.
+  - `Power.description` must be present and **at least 20 characters** long.
+
+- Serialization:
+  - Controlled using `serialize_rules` to avoid recursion.
+
+---
+
+## 🛠 Tech Stack
+
+- Python 3.8+
+- Flask
+- Flask SQLAlchemy
+- Flask Migrate
+- SQLAlchemy-Serializer
+- SQLite (local development)
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the repository
+
+```bash
+git clone <your-repo-url>
+cd <project-folder>
+```
+
+### 2. Set up the environment
+
+```bash
+pipenv install
+pipenv shell
+```
+
+### 3. Run migrations & seed the database
+
+```bash
+flask db init
+flask db migrate -m "Initial migration"
+flask db upgrade
+python seed.py
+```
+
+### 4. Run the application
+
+```bash
+flask run
+```
+
+Visit: [http://127.0.0.1:5555](http://127.0.0.1:5555)
+
+---
+
+## 📦 API Endpoints
+
+### `GET /heroes`  
+Returns all heroes.
+
+### `GET /heroes/<id>`  
+Returns a hero and their powers.
+
+### `POST /hero_powers`  
+Assign a power to a hero.
+
+**Request Body:**
+```json
+{
+  "strength": "Strong",
+  "power_id": 2,
+  "hero_id": 1
+}
+```
+
+### `GET /powers/<id>`  
+Returns a power and all heroes that have it.
+
+### `PATCH /powers/<id>`  
+Update a power description.
+
+---
+
+## 📄 Validations & Error Handling
+
+- Invalid `strength` or short `description` fields will return appropriate error responses.
+- Invalid or missing resources return 404 or 400 errors.
+
+---
+
+## 📌 Notes
+
+- Uses `serialize_rules` from SQLAlchemy-Serializer to prevent infinite nesting.
+- Use the Flask shell (`flask shell`) to test relationships and serialization quickly.
+
+---
+
+## 👩🏽‍💻 Author
+
+Joan Wambui 
